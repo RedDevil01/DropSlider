@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI Slider - Range with fixed minimum</title>
+    <link rel="stylesheet" type="text/css" href="css/dropSlider.css">
+	
+    <!-- include external libraries here... -->    
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    
+    <!-- include internal libraries here... -->
+    <script src="script/dropSlider.js" type="text/javascript"></script> 
+
+    <script type="text/javascript" >
+        $(function () { $("#1").dropSlider({ Name: "Slider1"}); });
+        $(function () { $("#2").dropSlider({ Name: "Slider2", min: 30, SelectedValue: 50 , step: 10 }); });
+        $(function () { $("#3").dropSlider({ Name: "Slider3", min: 40, max: 80, SelectedValue: 50 , step : 5 }); });
+    </script>
+</head>
+
+
+<body>   
+    <div id="1" class="sliderContainer"></div>    
+    <div id="2" class="sliderContainer medium"></div>
+	<div id="3" class="sliderContainer small"></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
