@@ -1,98 +1,120 @@
-.slider {
+body,
+div,
+td,
+a {
+  margin: 0px;
+  padding: 0px;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000;
+}
+/* Effects Styles */
+.sliderContainer {
+  margin-bottom: 20px;
+  width: 220px;
+}
+.sliderContainer.small {
+  width: 150px;
+}
+.sliderContainer.medium {
+  width: 190px;
+}
+.sliderContainer .sliderValue {
+  width: inherit;
+  padding: 0 0 0 20px;
+  height: 30px;
+  position: relative;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  box-shadow: #a9a9a9 0px 1px 2px;
+  -moz-box-shadow: #a9a9a9 0px 1px 2px;
+  -webkit-box-shadow: #a9a9a9 0px 1px 2px;
+  background: #e5e5e5;
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0, #e4e6e8), color-stop(1, #f9fafb));
+  background: -ms-linear-gradient(bottom, #e4e6e8, #f9fafb);
+  background: -moz-linear-gradient(left, #e4e6e8 0%, #f9fafb 100%);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=#e4e6e8,endColorstr='#f9fafb')";
+  display: block;
+}
+.sliderContainer .sliderValue input {
+  height: 30px;
+  background-color: transparent !important;
+  border: 0px solid #999;
+  width: 100%;
+  padding: 3px 0 0 0;
+  font-size: 11px;
+}
+.sliderContainer .sliderValue .sliderImg {
+  cursor: pointer;
+  background: url(../images/slider-ui-img.gif) no-repeat;
+  width: 28px;
+  height: 31px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.sliderContainer .sliderValue.error {
+  background: rgba(255, 0, 0, 0.15) !important;
+  border: 1px solid red !important;
+}
+.sliderContainer .sliderValue input.errorMsg {
+  color: Red;
+  height: auto;
+  font-size: 11px;
+  right: 20px;
+  position: relative;
+  padding: 3px;
+}
+.sliderContainer .sliderControl {
+  width: inherit;
+  padding: 0 0 0 20px;
+  height: 30px;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  box-shadow: #a9a9a9 0px 1px 2px;
+  -moz-box-shadow: #a9a9a9 0px 1px 2px;
+  -webkit-box-shadow: #a9a9a9 0px 1px 2px;
+  background: #e5e5e5;
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0, #e4e6e8), color-stop(1, #f9fafb));
+  background: -ms-linear-gradient(bottom, #e4e6e8, #f9fafb);
+  background: -moz-linear-gradient(left, #e4e6e8 0%, #f9fafb 100%);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=#e4e6e8,endColorstr='#f9fafb')";
+  position: relative;
+}
+.sliderContainer .sliderControl .slider {
   border: none !important;
   height: 2px !important;
   background: url(../images/slider-ui-img.gif) repeat-x 0px -39px !important;
   position: relative;
   top: 12px;
-  margin-right:60px; 
+  margin-right: 60px;
 }
-.slider .ui-slider-handle {
+.sliderContainer .sliderControl .slider .ui-slider-handle {
   width: 13px;
   height: 13px;
   position: absolute;
   top: -5px;
   z-index: 3;
   background: url(../images/slider-ui-img.gif) no-repeat 0px -44px !important;
-  cursor:pointer;
+  cursor: pointer;
 }
-.slider .ui-widget-header {
+.sliderContainer .sliderControl .slider .ui-widget-header {
   position: absolute;
-  background:url(../images/slider-ui-img.gif) repeat-x 0px -34px !important;border:1px solid #686868 !important;height:4px !important;
+  background: url(../images/slider-ui-img.gif) repeat-x 0px -34px !important;
+  border: 1px solid #686868 !important;
+  height: 4px !important;
 }
-.slider a {
+.sliderContainer .sliderControl .slider a {
   outline: none;
   -moz-outline-style: none;
 }
-
-
-
-/*box shadow, border-radius effects*/
-.sliderControl,.sliderValue{
-background-color:#e5e5e5;
-padding:0px;
-height:30px;
-border-radius:6px;
--moz-border-radius:6px;
--moz-box-shadow:#a9a9a9 0px 1px 2px;
-box-shadow:0px 1px 2px #a9a9a9;
-position:relative;
-background:-moz-linear-gradient(left, #e4e6e8, #f9fafb);    
-background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#e4e6e8), color-stop(99%,#f9fafb)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(left,  #e4e6e8 0%,#f9fafb 99%); /* Chrome10+,Safari5.1+ */
-filter: progid:DXImageTransform.Microsoft.gradient( GradientType=1, StartColorStr='#e4e6e8', EndColorStr='#f9fafb');/* IE6-8 */
--webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
-padding:0px 0px 0 20px;
-}
-
-
-/*slider Control*/
-.sliderContainer{
-margin-bottom:20px;
-}
-.sliderControl{
-margin-bottom:20px;
-}
-.sliderContainer{
-width:220px;
-}
-.sliderContainer.small{
-width:150px;
-}
-.sliderContainer.medium{
-width:190px;
-}
-
-
-/*slider Value*/
-.sliderValue{
-z-index:4;
-width :inherit;
-}
-
-
-.sliderValue input{
-float:left;
-height:30px;
-background-color:transparent !important;
-border:0px solid #999;
-width:100%;
-}
-.sliderImg{
-float:right;
-cursor:pointer;
-background:url(../images/slider-ui-img.gif) no-repeat;
-width:28px;
-height:31px;
-position:absolute;
-right:0;
-}
-
-
-input.result{
-background:transparent !important;
-border:0px solid #999;
-font-size:10px;
-float:right !important;
-margin:5px 5px 0 0; 
-width:30px !important;
+.sliderContainer .sliderControl input.result {
+  background: transparent !important;
+  border: 0px solid #999;
+  font-size: 10px;
+  float: right !important;
+  margin: 5px 5px 0 0;
+  width: 30px !important;
 }

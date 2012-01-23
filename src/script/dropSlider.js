@@ -1,118 +1,128 @@
-﻿(function () {
+(function() {
+  var SliderControl;
 
-    var SliderControl;
-    window.SliderControl = SliderControl = (function () {
+  window.SliderControl = SliderControl = (function() {
 
+    function SliderControl() {}
 
-        function SliderControl() { }
+    SliderControl.prototype._create = function() {
+      var SliderValue, dragValue, errorMsgTag, imageTag, inputTag, inputsmallTag, sliderInner;
+      inputsmallTag = ($('<input/>')).attr({
+        type: 'text'
+      }).attr({
+        type: 'hidden'
+      }).attr({
+        value: this.options.SelectedValue
+      });
+      dragValue = ($('<input/>')).attr({
+        type: 'text'
+      }).attr({
+        readonly: 'readonly'
+      }).attr({
+        value: this.options.SelectedValue
+      }).addClass(this.css.dragValue);
+      sliderInner = ($('<div/>')).addClass(this.css.sliderInner).append(inputsmallTag).slider({
+        animate: true,
+        range: this.options.range,
+        value: this.options.SelectedValue,
+        min: this.options.min,
+        max: this.options.max,
+        step: this.options.step
+      });
+      SliderControl = ($('<div/>')).addClass(this.css.sliderControler).hide().append(sliderInner).append(dragValue);
+      imageTag = ($('<div/>')).addClass(this.css.sliderImg);
+      errorMsgTag = ($('<input/>')).attr({
+        type: 'text'
+      }).attr({
+        readonly: 'readonly'
+      }).addClass(this.css.errorMsg);
+      inputTag = ($('<input/>')).attr({
+        type: 'text'
+      }).attr({
+        id: this.options.Name + '_Input'
+      }).attr({
+        value: this.options.SelectedValue
+      });
+      SliderValue = ($('<div/>')).addClass(this.css.sliderValue).append(inputTag).append(imageTag).append(errorMsgTag);
+      return ($(this.element)).attr({
+        id: this.options.Name
+      }).append(SliderValue).append(SliderControl);
+    };
 
-        SliderControl.prototype._create = function () {
-            var SliderValue, sliderControl, image, input, sliderInner, inputsmall, dragValue;
-            image = ($('<div/>')).addClass(this.css.sliderImg);
-            input = ($('<input/>')).attr({type: 'text'})
-								   .attr({id: this.options.Name + "_Input"})
-								   .attr({value: this.options.SelectedValue});
-								
-            SliderValue = ($('<div/>')).addClass(this.css.sliderValue)
-									   .append(input)
-									   .append(image);
-            sliderInner = ($('<div/>')).addClass(this.css.sliderInner);
+    SliderControl.prototype._init = function() {
+      var element, sliderControl, sliderControlInput, sliderValue, sliderValueInput,
+        _this = this;
+      element = $(this.element);
+      sliderValue = element.children().eq(0);
+      sliderControl = element.children().eq(1);
+      sliderValueInput = $('#' + this.options.Name + '_Input', sliderValue);
+      sliderControlInput = $('.' + this.css.dragValue, sliderControl);
+      ($("#" + this.options.Name + " " + '.' + this.css.sliderImg)).click(function(event) {
+        _this.OnValueChange(sliderValue, sliderControlInput);
+        sliderValue.hide();
+        return sliderControl.show();
+      });
+      sliderValueInput.change(function(event) {
+        return _this.OnValueChange(sliderValue, sliderControl);
+      });
+      return ($('.' + this.css.sliderInner, sliderControl)).slider({
+        change: function(e, ui) {
+          sliderValue.show();
+          sliderControl.hide();
+          sliderControlInput.val(ui.value);
+          return sliderValueInput.val(ui.value);
+        },
+        slide: function(e, ui) {
+          return sliderControlInput.val(ui.value);
+        }
+      });
+    };
 
-            inputsmall = ($('<input/>')).attr({type: 'text'})
-										.attr({type: "hidden"})
-										.attr({value: this.options.SelectedValue});
+    SliderControl.prototype.OnValueChange = function(sliderValue, sliderControl) {
+      var error, msg, sliderControlInput, sliderValueInput;
+      msg = "";
+      sliderControlInput = $('.' + this.css.dragValue, sliderControl);
+      sliderValueInput = $('#' + this.options.Name + '_Input', sliderValue);
+      if (isNaN(sliderValueInput.val())) {
+        msg = sliderValueInput.val() + ' was not a number.';
+      } else if (sliderValueInput.val() < this.options.min) {
+        msg = sliderValueInput.val() + ' was below minumum value.';
+      } else if (sliderValueInput.val() > this.options.max) {
+        msg = sliderValueInput.val() + ' was above maximum value.';
+      }
+      if (msg !== "") sliderValueInput.val(sliderControlInput.val());
+      error = $('.' + this.css.errorMsg, sliderValue);
+      error.val(msg);
+      sliderControl.slider('option', 'value', sliderValueInput.val);
+      error.show();
+      return error.delay(this.options.msgDelay).fadeOut(this.options.msgFadeTime);
+    };
 
-            dragValue = ($('<input/>')).attr({type: 'text'})
-									   .addClass(this.css.dragValue);
+    SliderControl.prototype.options = {
+      Name: "Default",
+      range: "min",
+      min: 0,
+      max: 100,
+      SelectedValue: 50,
+      step: 1,
+      msgDelay: 800,
+      msgFadeTime: 1600
+    };
 
-            sliderControl = ($('<div/>')).addClass(this.css.sliderControler).hide();
+    SliderControl.prototype.css = {
+      sliderValue: 'sliderValue',
+      sliderImg: 'sliderImg',
+      sliderInner: 'slider',
+      sliderControler: 'sliderControl',
+      dragValue: 'result',
+      errorMsg: 'errorMsg',
+      error: 'error'
+    };
 
-            ($(sliderControl)).append(sliderInner)
-							  .append(inputsmall)
-							  .append(dragValue);
-            $(sliderInner).append(inputsmall);
+    return SliderControl;
 
-            sliderInner.slider({
-                animate: true,
-                range: "min",
-                value: this.options.SelectedValue,
-                min: this.options.min,
-                max: this.options.max,
-                step: this.options.step
-            });
+  })();
 
-            ($(this.element)).attr({ id: this.options.Name });
-            return ($(this.element)).append(SliderValue)
-								    .append(sliderControl);
-
-        };
-
-        SliderControl.prototype._init = function () {
-            var that = this;
-            var divControl1 = that.element[0].firstChild;
-            var divControl2 = that.element[0].children[1];
-            ($('.' + this.css.sliderImg, divControl1)).click(function () {
-                return that.clicked();
-            });
-
-            ($("#" + this.options.Name + "_Input", divControl1)).change(function () {
-                that.clicked();
-            });
-
-            ($("." + this.css.sliderInner, divControl2)).slider({
-                change: function (e, ui) {
-                    $("#" + that.options.Name).find('.' + that.css.sliderValue).show();
-                    $("#" + that.options.Name).find('.' + that.css.sliderControler).hide();
-                    $("#" + that.options.Name + "_Input").val($("." + that.css.sliderInner, that.element[0]).slider("value"));
-                    $('.' + that.css.dragValue, that.element[0]).val($("." + that.css.sliderInner, that.element[0]).slider("value"));
-                },
-                slide: function (e, ui) {
-                    $('.' + that.css.dragValue, that.element[0]).val(ui.value);
-                }
-
-            });
-        };
-
-        SliderControl.prototype.clicked = function () {
-            var val = ($("#" + this.options.Name + "_Input").val());
-            if (isNaN(val)) {
-                alert("Please enter number only");
-                ($("#" + this.options.Name + "_Input")).val((this.options.min + this.options.max) / 2);
-            }
-            else if (val < this.options.min)
-                alert("Minimum value is " + this.options.min);
-
-            else if (val > this.options.max)
-                alert("Maximum value is " + this.options.max);
-
-            $('#' + this.options.Name).find('.' + this.css.sliderInner).slider('option', 'value', ($('#' + this.options.Name + "_Input").val()));
-            $('#' + this.options.Name).find('.' + this.css.sliderValue).hide();
-            $('#' + this.options.Name).find('.' + this.css.sliderControler).show();
-        };
-
-		// Widget Options that can be passed in at initiation time.
-        SliderControl.prototype.options = {
-            Name: "Default",
-            range: "min",
-            min: 0,
-            max: 100,
-            SelectedValue: 50,
-            step: 1
-        };
-
-		// This are the CSS style Names used by the JavaScript.
-        SliderControl.prototype.css = {
-            sliderValue: 'sliderValue',
-            sliderImg: 'sliderImg',
-            sliderInner: 'slider',
-            sliderControler: 'sliderControl',
-            dragValue: 'result'
-        };
-
-        return SliderControl;
-
-    })();
-
-    $.widget("vdms.dropSlider", new SliderControl);
+  $.widget("vdms.dropSlider", new SliderControl);
 
 }).call(this);
