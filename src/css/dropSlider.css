@@ -58,13 +58,21 @@ a {
   background: rgba(255, 0, 0, 0.15) !important;
   border: 1px solid red !important;
 }
-.sliderContainer .sliderValue input.errorMsg {
+ .sliderContainer input.errorMsg {
   color: Red;
   height: auto;
   font-size: 11px;
   right: 20px;
   position: relative;
   padding: 3px;
+  background:transparent;
+  border:0px;
+  display:inline-block;
+  float:left;
+  text-align:left;
+  width:100%;
+  text-indent:20px;
+  
 }
 .sliderContainer .sliderControl {
   width: inherit;
